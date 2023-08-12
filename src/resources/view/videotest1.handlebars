@@ -1,0 +1,31 @@
+<div class="container p-4">
+  <div class="row justify-content-md-center">
+    <div class="col-6">
+        <div class="card" style="width: 100%;">
+            <iframe width="100%" src="https://www.youtube.com/embed/{{test1.slug}}" title="{{test1.name}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            {{!-- <img src="{{test1.img}}" alt=""> --}}
+            <div class="card-body">
+                <h5 class="card-title">{{test1.name}}</h5>
+                <p class="card-text">{{test1.description}}</p>
+                <h2>Fill in the blank</h2>
+                <form method="GET" action="/videos/{{test1.slug}}/test1check/">
+                    {{test1.testScript}}
+                    <div class="form-group">
+                        {{#each test1.blanks}}
+                            <input type="text" class="form-control" style="margin-top: 2%;" id="{{this}}" name="{{this}}" placeholder="Blank 1">
+                        {{/each}}
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 2%;">Nộp bài</button>
+                </form>
+
+                <h2>New Word</h2>
+                {{#each test1.Newsword}}
+                    {{#each this}}
+                        <p>{{this.word}} <br>{{this.phonetics}} </p>
+                    {{/each}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

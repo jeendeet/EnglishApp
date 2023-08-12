@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "nodemon --inspect src/index.js",
+    "watch": "node-sass --watch src/resources/scss/ -o src/public/css/",
+    "test": "echo \"ERR: No test found\" && exit 1 "
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.0",
+    "mongoose": "^7.4.1",
+    "request": "^2.88.2",
+    "updated-youtube-info": "^1.4.7",
+    "youtube-transcript": "^1.0.6"
+  },
+  "devDependencies": {
+    "node-sass": "^9.0.0",
+    "nodemon": "^3.0.1"
+  }
+}
