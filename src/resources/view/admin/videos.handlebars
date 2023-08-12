@@ -1,0 +1,39 @@
+<div class="container p-4">
+    <form method="POST" action="./videos/create">
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control"  id="idVid" name="idVid" placeholder="Add ID Video here" aria-describedby="button-addon1">
+                <a type="button" class="btn btn-outline-secondary" href="">More Option</a>
+                <button class="btn btn-primary" type="submit" id="button-addon1">Add New Video</button>
+            </div>
+        </div>
+    </form>
+    <h1>All Video List</h1>
+    <table class="table mt-4">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Views</th>
+        <th scope="col">Tag</th>
+        <th scope="col">catogolory</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#each videos}}
+        <tr>
+        <th scope="row">{{@index}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.views}}</td>
+        <td>{{this.tag}}</td>
+        <td>{{this.catogolory}}</td>
+        <td><a type="button" class="btn btn-primary" href="./videos/{{this._id}}">Edit</a></td>
+        <td><a type="button" class="btn btn-danger" href="./videos/delete/{{this._id}}">Delete</a></td>
+        </tr>
+    {{/each}}
+    </tbody>
+    </table>
+  </div>
+</div>

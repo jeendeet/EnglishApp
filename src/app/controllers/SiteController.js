@@ -10,10 +10,6 @@ class SiteController {
             })
             .catch(next)
     }
-    //[GET] /contact
-    contact(req,res) {
-        res.render('contact')
-    }
 
 }
 module.exports = new SiteController
