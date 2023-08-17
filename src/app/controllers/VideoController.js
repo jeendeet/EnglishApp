@@ -1,6 +1,8 @@
 const Video = require ('../models/Videos')
 const {createNewVideo,createTest1,createTestScript1} = require('../../util/youtube');
 const {wordGetData,wordListGetData} = require('../../util/api/dictionaryRequestAPI');
+const request = require('request');
+const fs = require('fs');
 
 class VideoController {
     //[GET] /videos/:slug
@@ -16,7 +18,50 @@ class VideoController {
                 .catch(next)
         }
     }
-
+    //[GET] /videos/tag/:tag
+    getByTag(req,res,next) {
+        if(req.query.api){
+            let tag = req.params.tag
+            Video.find()
+                .then(videos =>{
+                    let tagVideos = []
+                    for(let video of videos){
+                        if(video.tag.includes(tag)){
+                            tagVideos.push(video)
+                        }
+                    }
+                    res.json(tagVideos)
+                })
+                .catch(next)
+        }
+        else{
+            Video.findOne({ slug: req.params.slug }).lean()
+                .then(video => res.render('video', { video }))
+                .catch(next)
+        }
+    }
+    //[GET] /videos/news
+    getByNews(req,res,next) {
+        if(req.query.api){
+            let tag = req.params.tag
+            Video.find()
+                .then(videos =>{
+                    let tagVideos = []
+                    for(let video of videos){
+                        if(video.tag.includes(tag)){
+                            tagVideos.push(video)
+                        }
+                    }
+                    res.json(tagVideos)
+                })
+                .catch(next)
+        }
+        else{
+            Video.findOne({ slug: req.params.slug }).lean()
+                .then(video => res.render('video', { video }))
+                .catch(next)
+        }
+    }
     //[GET] /Videos/create
     create(req,res,next) {
         createNewVideo(req.params.slug)

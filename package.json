@@ -1,12 +1,14 @@
 {
   "scripts": {
-    "start": "nodemon --inspect src/index.js",
+    "start": "nodemon --inspect index.js",
     "watch": "node-sass --watch src/resources/scss/ -o src/public/css/",
     "test": "echo \"ERR: No test found\" && exit 1 "
   },
   "dependencies": {
     "express": "^4.18.2",
     "express-handlebars": "^7.1.0",
+    "express-validator": "^7.0.1",
+    "fs": "^0.0.1-security",
     "mongoose": "^7.4.1",
     "mongoose-slug-generator": "^1.0.4",
     "request": "^2.88.2",

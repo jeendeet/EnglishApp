@@ -5,6 +5,8 @@ const videoController = require('../app/controllers/VideoController')
 
 // route.get('/doTest1', videoController.doTest1)
 // route.get('/doTest2', videoController.doTest2)
+route.get('/tag/:tag', videoController.getByTag)
+
 route.get('/create/:slug', videoController.create)
 route.get('/:slug/test1', videoController.test1)
 route.get('/:slug/test1check', videoController.test1Check)
