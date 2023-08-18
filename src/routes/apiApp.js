@@ -9,10 +9,10 @@ route.post('/user/login-authen', apiController.userLoginAuthen)
 // route.post('/user/signup', apiController.userSignup)
 
 route.get('/videos/all', apiController.getVideoAll)
-// route.get('/videos/news', apiController.getVideoNew)
-// route.get('/videos/polular', apiController.getVideoPolular)
+route.get('/videos/news/:num', apiController.getVideoNew)
+route.get('/videos/polular/:num', apiController.getVideoPolular)
 route.get('/videos/tag/:tag', apiController.getVideoByTag)
 route.get('/videos/id/:id', apiController.getVideoByID)
-route.get('/videos/test/id/:id', apiController.getVideoTestByID)
+route.get('/videos/test/:id', apiController.getVideoTestByID)
 
 module.exports = route 

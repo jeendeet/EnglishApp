@@ -10,7 +10,7 @@ function createTranscript(scripts){
     return script_n
 }
 
-function createNewVideo(idYoutube){
+async function createNewVideo(idYoutube){
     const VideoData = {idVid:idYoutube};
     const video = new VideoApp(VideoData);
     video.save();
@@ -36,6 +36,7 @@ function createNewVideo(idYoutube){
                     video.description = "videoInfo description";
                     video.img = videoInfo.thumbnailUrl;
                     video.slug = idYoutube;
+                    video.views = 0;
                     video.save();
                 })
             console.log("Stop fetch meta data", idYoutube);

@@ -51,15 +51,43 @@ class ApiController {
             .then(videos =>{res.json(videos)})
             .catch(next)
     }
+    //[GET] api/videos/news/:num
+    getVideoNew(req,res,next) {
+        Video.find().sort( { createdAt:-1 } )
+            .then(videos =>{
+                let numOfVideo = req.params.num;
+                let videoNews = [];
+                for(let video of videos){
+                    videoNews.push(video);
+                    if((--numOfVideo)==0) break;
+                }
+                res.json(videoNews);
+            })
+            .catch(next)
+    }
+    //[GET] api/videos/polular/:num
+    getVideoPolular(req,res,next) {
+        Video.find().sort( { views:-1 } )
+            .then(videos =>{
+                let numOfVideo = req.params.num;
+                let videoTops = [];
+                for(let video of videos){
+                    videoTops.push(video);
+                    if((--numOfVideo)==0) break;
+                }
+                res.json(videoTops);
+            })
+            .catch(next)
+    }
     //[GET] api/videos/tag/:tag
     getVideoByTag(req,res,next) {
         let tag = req.params.tag
         Video.find()
             .then(videos =>{
-                let tagVideos = []
+                let tagVideos = [];
                 for(let video of videos){
                     if(video.tag.includes(tag)){
-                        tagVideos.push(video)
+                        tagVideos.push(video);
                     }
                 }
                 res.json(tagVideos)
@@ -76,14 +104,14 @@ class ApiController {
     //[GET] api/videos/test1/:id
     getVideoTestByID(req,res,next) {
         let id = req.params.id
-        Video.findOne({ _id:id }).lean()
+        Video.findOne({ _id:id })
             .then(video => {
+                video.views = parseInt(video.views) +1;
+                video.save();
                 let test1 ={}
                 console.log("Start create test")
                 const scriptTest = createTestScript1(video.script);
-                test1.name = video.name;
-                test1.description = video.description;
-                test1.slug = video.slug;
+                test1.video = video;
                 test1.testScript = scriptTest.newScript;
                 test1.blanks = scriptTest.listBlank;
                 console.log(test1)

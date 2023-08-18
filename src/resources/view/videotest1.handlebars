@@ -8,7 +8,7 @@
                 <h5 class="card-title">{{test1.name}}</h5>
                 <p class="card-text">{{test1.description}}</p>
                 <h2>Fill in the blank</h2>
-                <form method="GET" action="/videos/{{test1.slug}}/test1check/">
+                <form method="GET" action="/videos/test1check/{{test1._id}}">
                     {{test1.testScript}}
                     <div class="form-group">
                         {{#each test1.blanks}}

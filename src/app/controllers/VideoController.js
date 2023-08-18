@@ -1,23 +1,13 @@
 const Video = require ('../models/Videos')
+const History = require ('../models/History')
+const User = require ('../models/User')
+
 const {createNewVideo,createTest1,createTestScript1} = require('../../util/youtube');
 const {wordGetData,wordListGetData} = require('../../util/api/dictionaryRequestAPI');
 const request = require('request');
 const fs = require('fs');
 
 class VideoController {
-    //[GET] /videos/:slug
-    show(req,res,next) {
-        if(req.query.api){
-            Video.findOne({slug: req.params.slug})
-                .then(video => res.json(video))
-                .catch(next)
-        }
-        else{
-            Video.findOne({ slug: req.params.slug }).lean()
-                .then(video => res.render('video', { video }))
-                .catch(next)
-        }
-    }
     //[GET] /videos/tag/:tag
     getByTag(req,res,next) {
         if(req.query.api){
@@ -63,38 +53,57 @@ class VideoController {
         }
     }
     //[GET] /Videos/create
-    create(req,res,next) {
-        createNewVideo(req.params.slug)
-        res.send('Create successfully');
+    async create(req,res,next) {
+        await createNewVideo(req.params.slug)
+        res.send('Success');
     }
-    //[GET] /Videos/:slug/test1
-    test1(req,res,next) {
-        Video.findOne({ slug: req.params.slug }).lean()
-            .then(video => {
-                let test1 ={}
-                console.log("Start create test")
-                const scriptTest = createTestScript1(video.script);
-                test1.name = video.name;
-                test1.description = video.description;
-                test1.slug = video.slug;
-                test1.testScript = scriptTest.newScript;
-                test1.blanks = scriptTest.listBlank;
-                console.log(test1)
-                return test1;
-            })
-            .then( test1 => {
-                const words = ["hello", "go", "happy"]
-                wordListGetData(words)
-                    .then(data =>{
-                        test1.Newsword = data
-                        console.log(data)
-                        res.render('videotest1', { test1 })
+    //[GET] /videos/:id?uid
+    show(req,res,next) {
+        User.findOne({ _id: req.query.uid }).lean()
+            .then(user => {
+                Video.findOne({ _id: req.params.id }).lean()
+                    .then(video => {
+                        res.render('video', { video:video, user:user, path:"auth" })
                     })
-                }
-            )
+                    .catch(next)
+            })
             .catch(next)
     }
-    //[GET] /Videos/:slug/test1Check
+    //[GET] /Videos/test1/:id?uid
+    test1(req,res,next) {
+        User.findOne({ _id: req.query.uid }).lean()
+            .then(user => {
+                Video.findOne({ _id: req.params.id })
+                    .then(video => {
+                        video.views = parseInt(video.views) +1;
+                        video.save();
+                        let test1 ={}
+                        console.log("Start create test")
+                        const scriptTest = createTestScript1(video.script);
+                        test1.name = video.name;
+                        test1.description = video.description;
+                        test1._id = video._id;
+                        test1.slug = video.slug;
+                        test1.testScript = scriptTest.newScript;
+                        test1.blanks = scriptTest.listBlank;
+                        console.log(test1)
+                        return test1;
+                    })
+                    .then( test1 => {
+                        const words = ["hello", "go", "happy"]
+                        wordListGetData(words)
+                            .then(data =>{
+                                test1.Newsword = data
+                                console.log(data)
+                                res.render('videotest1', { test1:test1,user:user,path:"auth" })
+                            })
+                        }
+                    )
+                    .catch(next)
+            })
+            .catch(next)
+    }
+    //[GET] /Videos/test1Check/:id
     test1Check(req,res,next) {
 
         var output = {

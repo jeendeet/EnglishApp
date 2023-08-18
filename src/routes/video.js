@@ -8,9 +8,9 @@ const videoController = require('../app/controllers/VideoController')
 route.get('/tag/:tag', videoController.getByTag)
 
 route.get('/create/:slug', videoController.create)
-route.get('/:slug/test1', videoController.test1)
-route.get('/:slug/test1check', videoController.test1Check)
-route.get('/:slug', videoController.show)
+route.get('/test1/:id', videoController.test1)
+route.get('/test1check/:id', videoController.test1Check)
+route.get('/:id', videoController.show)
 
 
 module.exports = route 
